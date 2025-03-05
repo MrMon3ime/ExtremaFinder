@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExtremaFinder - Multivariable Function Analyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <!-- MathJax for LaTeX Rendering -->
+    <script type="text/javascript" async 
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="ExtremaFinder Logo" class="logo">
+        </div>
+        <h1>ExtremaFinder</h1>
+        <p>Your Multivariable Function Analyzer</p>
+    </header>
+
+    <main>
+        <!-- Input Section -->
+        <section class="input-section">
+            <h2>Analyze Your Function</h2>
+            <form method="POST">
+                <label for="function">Enter a multivariable function:</label>
+                <input type="text" name="function" id="function" placeholder="e.g., x**2 + y**2 - 2*x + 4*y + 1" required>
+                <button type="submit">Analyze</button>
+            </form>
+        </section>
+
+        {% if function_str %}
+        <!-- Results Section -->
+        <section id="results" class="results-section">
+            <h2>Analysis Results</h2>
+            <div class="results-grid">
+                <div class="result-card">
+                    <h3>Function</h3>
+                    <p>\[ {{ function_str }} \]</p>
+                </div>
+                <div class="result-card">
+                    <h3>Gradients</h3>
+                    <p>\[ {{ gradients }} \]</p>
+                </div>
+                <div class="result-card">
+                    <h3>Critical Points</h3>
+                    <p>\[ {{ critical_points }} \]</p>
+                </div>
+                <div class="result-card">
+                    <h3>Hessian Matrix</h3>
+                    <p>\[ {{ hessian }} \]</p>
+                </div>
+
+                {% if classifications %}
+                <div class="result-card">
+                    <h3>Local Extrema</h3>
+                    <ul>
+                        {% for point, classification in classifications %}
+                            <li>\( {{ point }} \) - {{ classification }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+            </div>
+
+            {% if plot_url %}
+            <div class="plot-section">
+                <h3>Function Plot</h3>
+                <img src="data:image/png;base64,{{ plot_url }}" alt="Function Plot">
+            </div>
+            {% endif %}
+
+            <!-- Force MathJax to re-render -->
+            <script>
+                MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+            </script>
+        </section>
+        {% endif %}
+
+        {% if error %}
+        <div class="error">
+            <p><strong>Error:</strong> {{ error }}</p>
+        </div>
+        {% endif %}
+        
+    </main>
+
+    <footer>
+        <p>Made By Mon3ime - Dedication For My Kind Teacher Mr. NESRAOUI RIYADH</p>
+        <p>&copy; 2025 ExtremaFinder. All rights reserved.</p>
+    </footer>
+</body>
+</html>
