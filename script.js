@@ -17,7 +17,6 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        // Show loading animation
         resultsSection.style.opacity = "0.5";
         resultsSection.innerHTML += `<p class="loading">Analyzing function...</p>`;
 
@@ -37,13 +36,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
-            // Smoothly update results with animations
             derivativeResult.innerHTML = `<span class="fade-in">${data.gradients.join(", ")}</span>`;
             criticalPointsResult.innerHTML = `<span class="fade-in">${JSON.stringify(data.critical_points)}</span>`;
             hessianMatrixResult.innerHTML = `<span class="fade-in">${data.hessian}</span>`;
             globalPointsResult.innerHTML = `<span class="fade-in">${JSON.stringify(data.classifications)}</span>`;
-
-            // Generate the 3D Plot
             generatePlot(functionStr);
 
         } catch (error) {
@@ -52,7 +48,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     function generatePlot(funcStr) {
-        // Plotly visualization (Placeholder for now)
         plotContainer.innerHTML = "";
         let trace = {
             z: [[0, 1], [1, 0]], 
